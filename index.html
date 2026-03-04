@@ -5014,14 +5014,19 @@ let currentStartName = "Giris";
 let currentEndName = "Seçilmedi";
 
 window.onload = () => {
-    if (savedSVG) document.getElementById('map-wrapper').innerHTML = savedSVG;
-    document.getElementById('hieInput').value = JSON.stringify(hierarchy, null, 2);
+    const mapWrapper = document.getElementById('map-wrapper');
+    mapWrapper.innerHTML = savedSVG;
+    
+    // syncUI ve render gibi temel işlevler kalsın
     syncUI();
     render();
-    updateTrans();
+
+    // ODAGI BURAYA VER: Boyutlandırmayı sadece bu fonksiyon yapsın
+    checkOrientation(); 
 };
 
 function checkOrientation() {
+    document.body.style.backgroundColor = "red";
     const vWidth = window.innerWidth;
     const vHeight = window.innerHeight;
     const topBar = document.getElementById("top-bar");
