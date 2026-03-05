@@ -82,7 +82,7 @@
         }
         
                 /* Sadece dikey tutulan (Portrait) ve genişliği 768px'den küçük cihazlar için */
-        @media only screen and (max-width: 768px) and (orientation: portrait) {
+        @media screen and (max-width: 768px) and (orientation: portrait) {
     
           /* 1. Üst Bar ve Butonlar */
           #top-bar {
@@ -107,7 +107,7 @@
           #searchInput {
             height: 10px !important;
             font-size: 20px !important; /* Yazılar daha okunaklı */
-            padding: 10px !important;
+            padding: 50px !important;
           }
 
           /* 3. InfoBox (Sağ Üstteki Bilgi Paneli) */
@@ -5057,7 +5057,7 @@ window.onload = () => {
     
     // syncUI ve render gibi temel işlevler kalsın
     syncUI();
-    render();
+    
 
     // ODAGI BURAYA VER: Boyutlandırmayı sadece bu fonksiyon yapsın
     checkOrientation(); 
@@ -5227,6 +5227,7 @@ function selectStart(id, name) {
     document.getElementById('results').innerHTML = "";
     document.getElementById('searchInput').value = name;
     updateInfoBox();
+    render();
 
     // --- KRİTİK GÜNCELLEME ---
     // Eğer halihazırda bir hedef seçiliyse VE bu hedef bir ACİL ÇIKIŞ ise:
@@ -5255,9 +5256,14 @@ function render() {
     const svg = document.querySelector('svg');
     if (!svg) return;
     let layer = svg.getElementById('dynamic-layer');
-    if (!layer) { layer = document.createElementNS("http://www.w3.org/2000/svg", "g"); layer.id = 'dynamic-layer'; svg.appendChild(layer); }
+    if (!layer) { 
+        layer = document.createElementNS("http://www.w3.org/2000/svg", "g"); 
+        layer.id = 'dynamic-layer'; 
+        svg.appendChild(layer); 
+    }
     layer.innerHTML = '';
 
+    // 1. Bağlantı çizgilerini çiz (Her zaman veya sadece rota varken görünebilir)
     edges.forEach(e => {
         const n1 = nodes.find(n => n.id === e.from);
         const n2 = nodes.find(n => n.id === e.to);
@@ -5270,14 +5276,30 @@ function render() {
         }
     });
 
+    // 2. Noktaları çiz ve sadece başlangıcı göster
     nodes.forEach(n => {
         const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
         const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        c.setAttribute("cx", n.x); c.setAttribute("cy", n.y);
-        c.setAttribute("class", "node-circle " + (selectedId === n.id ? "selected-node" : ""));
-        c.style.display = mode === 'admin' ? 'block' : 'none';
         
-        
+        c.setAttribute("cx", n.x); 
+        c.setAttribute("cy", n.y);
+        c.setAttribute("class", "node-circle");
+
+        // --- TEMEL MANTIK BURADA ---
+        if (n.id === currentStartId) {
+            // Sadece başlangıç seçildiğinde o nokta görünür olur
+            c.style.display = "block";
+            c.setAttribute("fill", "#ff0000"); // İstersen burada renk verebilirsin
+        } else if (mode === 'admin') {
+            // Admin modundaysan hepsi görünür
+            c.style.display = "block";
+        } else {
+            // Geri kalan her durumda (hedef dahil) noktalar gizli
+            c.style.display = "none";
+        }
+
+        g.appendChild(c);
+        layer.appendChild(g);
     });
 }
 
