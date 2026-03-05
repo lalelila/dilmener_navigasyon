@@ -82,69 +82,47 @@
         }
         
                 /* Sadece dikey tutulan (Portrait) ve genişliği 768px'den küçük cihazlar için */
-        @media screen and (max-width: 768px) and (orientation: portrait) {
-    
-          /* 1. Üst Bar ve Butonlar */
-          #top-bar {
-            height: 80px !important; /* Yüksekliği artır */
-            padding: 100px 15px !important;
-            gap: 15px !important;
-          } 
+        /* Mobil Dikey Mod (Portrait) Düzenlemeleri */
+        @media only screen and (max-width: 768px) and (orientation: portrait) {
+            /* Üst Barı Genişlet */
+            #top-bar {
+                height: auto !important; 
+                padding: 15px 10px !important;
+                flex-wrap: wrap; /* Sığmazsa alt satıra geç */
+                gap: 10px !important;
+            }
 
-          #top-bar button, .top-btn {
-            padding: 40px 20px !important;
-            font-size: 18px !important;
-            border-radius: 12px !important;
-          }
+            /* Arama Girişi (Input) - Daha yüksek ve büyük yazı */
+            .search-area input {
+                width: 100% !important;
+                height: 60px !important; /* El yordamıyla kolay seçim için */
+                font-size: 20px !important;
+                padding: 10px 15px !important;
+            }
 
-          /* 2. Arama Motoru (Input) */
-          #search-panel {
-            top: 95px !important; /* Üst bar kalınlaştığı için aşağı kaydırdık */
-            width: 90% !important;
-            left: 5% !important;
-          }
+            /* Zoom Butonları - Daha büyük daireler */
+            .zoom-buttons button {
+                width: 60px !important;
+                height: 60px !important;
+                font-size: 30px !important;
+            }
 
-          #searchInput {
-            height: 10px !important;
-            font-size: 20px !important; /* Yazılar daha okunaklı */
-            padding: 50px !important;
-          }
+            /* Bilgi Kutusu - Yazıları büyüt */
+            #info-box {
+                font-size: 14px !important;
+                min-width: 100% !important;
+                text-align: center !important;
+                padding: 15px !important;
+                box-sizing: border-box;
+            }
 
-          /* 3. InfoBox (Sağ Üstteki Bilgi Paneli) */
-          #info-box {
-            top: 160px !important; /* Arama motorunun altına denk gelmemesi için */
-            right: 15px !important;
-            padding: 30px !important;
-            font-size: 16px !important;
-            min-width: 150px !important;
-          }
-
-          /* 4. Yan Panel ve İçindeki Butonlar */
-          .side-panel {
-            width: 85% !important;
-            padding: 20px !important;
-          }
-
-          .side-panel button {
-            padding: 15px !important;
-            font-size: 18px !important;
-            margin-bottom: 10px !important;
-          }
-
-          /* 5. Harita (Map-Wrapper) ve Zoom Butonları */
-          /* Haritayı dikeyde daha büyük başlatmak için başlangıç scale değerini JS'den kontrol etmelisin */
-          .zoom-controls {
-            bottom: 40px !important;
-            left: 50% !important;
-            transform: translateX(-50%); /* Mobilde dikeyde ortaladık */
-            gap: 25px !important;
-          }
-
-          .z-btn {
-            width: 75px !important;
-            height: 75px !important;
-            font-size: 35px !important;
-          }
+            /* Arama Sonuç Paneli */
+            .side-panel {
+                width: 95% !important;
+                left: 2.5% !important;
+                top: 180px !important; /* Input ve butonların altına kaydır */
+            }
+         
         } 
         
         #emergency-btn {
@@ -5064,31 +5042,19 @@ window.onload = () => {
 };
 
 function checkOrientation() {
-    
     const vWidth = window.innerWidth;
     const vHeight = window.innerHeight;
-    const topBar = document.getElementById("top-bar");
-    const searchInput = document.getElementById("searchInput");
 
-    if (vHeight > vWidth && vWidth < 768) {
-        // --- MOBİL DİKEY AYARLARI ---
-        scale = 1.0; 
-        pointX = -100;
-        pointY = 120;
-        
-        // Stilleri doğrudan JS ile eziyoruz
-        if(topBar) topBar.style.height = "100px";
-        if(searchInput) searchInput.style.fontSize = "22px";
-        
-        console.log("Mobil dikey mod zorlandı.");
+    if (vWidth < 768) {
+        // --- MOBİL AYARLARI ---
+        scale = 0.6;      // Haritayı biraz daha uzaktan gör (ekrana sığsın)
+        pointX = -400;    // Haritayı yatayda ortala (verine göre ayarla)
+        pointY = 100;     // Haritayı dikeyde biraz aşağı kaydır
     } else {
-        // --- PC VEYA YATAY MOD ---
-        scale = 1;
+        // --- PC AYARLARI ---
+        scale = 1.0;
         pointX = 0;
         pointY = 0;
-        
-        if(topBar) topBar.style.height = "60px"; // Orijinal yüksekliğin neyse
-        if(searchInput) searchInput.style.fontSize = "16px";
     }
     updateTrans();
 }
