@@ -14,7 +14,7 @@
             top: 10px;
             left: 10px;
             right: 10px;
-            padding: 100px 15px;
+            padding: 30px 15px;
             background: var(--dark);
             color: white;
             display: flex;
@@ -29,16 +29,16 @@
         .left-buttons { display: flex; gap: 10px; }
         .search-zoom-group { display: flex; align-items: center; gap: 10px; flex: 1; justify-content: center; }
         .search-area { display: flex; gap: 6px; }
-        .search-area input { padding: 20px 20px; border-radius: 8px; border: none; width: 180pt; font-size: 17px; font-weight: bold;}
+        .search-area input { padding: 70px 20px; border-radius: 8px; border: none; width: 500pt; font-size: 40px; font-weight: bold;}
         .zoom-buttons { display: flex; flex-direction: row; gap: 6px; }
-        .zoom-buttons button { width: 50px; height: 50px; font-size: 25px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; }
+        .zoom-buttons button { width: 200px; height:200px; font-size: 180px; border-radius: 50%; border: none; background: var(--primary); color: white; cursor: pointer; }
         #info-box { background: rgba(0,0,0,0.85); color: #2ecc71; padding: 20px 14px; border-radius: 10px; font-family: monospace; font-size: 12px; pointer-events: none; min-width: 220px; line-height: 1.5; text-align: right; }
 
         .btn { padding: 20px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; color: white; }
         .mode-user { background: var(--primary); }
         
 
-        .side-panel { position: absolute; top: 300px; width: 340px; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 900; max-height: 50vh; overflow-y: auto; }
+        .side-panel { position: absolute; top: 300px; width: 500px; background: white; padding: 50px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 900; max-height: 50vh; overflow-y: auto; }
         #search-panel { left: 20px; }
         #editor-panel { right: 20px; background: #2d3436; color: white; display: none; }
         
@@ -60,10 +60,10 @@
 
         .result-item { padding: 12px; border-bottom: 1px solid #eee; cursor: default; transition: 0.2s; border-radius: 5px; background: #fff; }
         .result-item:hover { background: #f9f9f9; }
-        .result-item b { display: block; color: #2c3e50; }
-        .result-item small { color: #7f8c8d; line-height: 1.4; display: block; margin-bottom: 8px; }
+        .result-item b { display: block; color: #2c3e50; font-size: 40px; }
+        .result-item small { color: #7f8c8d; line-height: 1.4; display: block; margin-bottom: 8px; font-size: 40px;}
 
-        .btn-action { padding: 6px 10px; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 11px; font-weight: bold; transition: 0.2s; }
+        .btn-action { padding: 15px 10px; border: none; border-radius: 4px; color: white; cursor: pointer; font-size: 22px; font-weight: bold; transition: 0.2s; }
         .btn-start { background: #3498db; }
         .btn-end { background: #2ecc71; }
         .btn-action:hover { opacity: 0.8; }
@@ -76,7 +76,7 @@
        
 
         #map-wrapper {
-          transform-origin: 100 0;
+          transform-origin: 100 300;
           transition: transform 0.1s ease-out; /*-> Bu satırı istersen ekleyebilirsin, geçişleri yumuşatır */
           will-change: transform;
         }
@@ -129,8 +129,8 @@
           position: fixed;
           bottom: 120px; /* Zoom butonlarının üzerinde durması için */
           right: 30px;
-          width: 70px;
-          height: 70px;
+          width: 200px;
+          height: 200px;
           background-color: #e74c3c; /* Acil durum kırmızısı */
           color: white;
           border: none;
@@ -143,7 +143,12 @@
           justify-content: center;
           transition: transform 0.2s;
         }
-
+        /* 2. İçindeki emojiyi/resmi hedef alıp büyütüyoruz */
+        #emergency-btn span {
+          font-size: 90px !important; /* Buradaki rakamı artırarak ışığı büyütebilirsin */
+          line-height: 1;
+          display: block;
+        }
         #emergency-btn:active {
           transform: scale(0.9);
         }
